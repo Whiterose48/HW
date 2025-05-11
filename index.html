@@ -664,11 +664,6 @@
             resultDiv.innerHTML = "";
             resultBox.classList.remove('show');
 
-            if (!refId) {
-                resultDiv.innerText = "กรุณากรอกเลขประจำตัวก่อนนะครับ 🥺";
-                return;
-            }
-
             fetch("https://api.ywc20.ywc.in.th/homework/candidates", {
                 method: "GET",
                 headers: {
