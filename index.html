@@ -660,7 +660,7 @@
             var resultDiv = document.getElementById("result");
             var resultBox = document.querySelector('.center-box-1');
 
-            // ล้างผลลัพธ์และซ่อนกล่องผลลัพธ์ก่อน
+            // Clear results and hide the box before new fetch
             resultDiv.innerHTML = "";
             resultBox.classList.remove('show');
 
@@ -679,16 +679,13 @@
                 .then(function (data) {
                     let found = null;
 
-                    for (const group in data) {
-                        const candidates = data[group];
-                        for (const person of candidates) {
+                    Object.values(data).forEach(group => {
+                        group.forEach(person => {
                             if (person.interviewRefNo.toUpperCase() === refId) {
                                 found = person;
-                                break;
                             }
-                        }
-                        if (found) break;
-                    }
+                        });
+                    });
 
                     if (found) {
                         resultDiv.innerHTML =
@@ -702,15 +699,16 @@
                             "<p>กรุณาตรวจสอบอีกครั้ง</p>";
                     }
 
-                    // แสดงกล่องผลลัพธ์
+                    // Show result box
                     resultBox.classList.add('show');
                 })
                 .catch(function (error) {
                     console.error("เกิดข้อผิดพลาด:", error);
-                    resultDiv.innerText = "เกิดข้อผิดพลาดในการเชื่อมต่อกับ API 😥";
+                    resultDiv.innerHTML = "<p>เกิดข้อผิดพลาดในการเชื่อมต่อกับ API 😥</p>";
                     resultBox.classList.add('show');
                 });
         }
+
     </script>
 </body>
 
